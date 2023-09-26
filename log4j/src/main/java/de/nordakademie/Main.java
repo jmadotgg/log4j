@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         final int PORT = 8080;
         HttpServer server =
-                HttpServer.create(new InetSocketAddress("localhost", PORT), 0);
+                HttpServer.create(new InetSocketAddress("0.0.0.0", PORT), 0);
         server.createContext("/", new RequestHandler());
         server.start();
         System.out.println("Server is running on port " + PORT);
